@@ -6,6 +6,7 @@ lines = inputFile.readlines()
 inputFile.close()
 
 def partOne():
+    # Performs recursive DFS
     def getOrbits(orbited, orbits):
         if orbited not in graph:
             return 0
@@ -15,6 +16,7 @@ def partOne():
             total += orbits + getOrbits(orbiter, orbits)
         return total
 
+    # Construct directed graph
     graph = {}
     for line in lines:
         orbited, orbiter = line.split(')')
@@ -26,6 +28,7 @@ def partOne():
     return getOrbits('COM', 0)
 
 def partTwo():
+    # Construct undirected graph
     graph = {}
     start = destination = ''
     for line in lines:
@@ -44,6 +47,7 @@ def partTwo():
         else:
             graph[orbiter[:-1]] = [orbited]
 
+    # Dijkstra's algorithm
     distances = {start: 0}
     visited = {}
     while len(visited) < len(graph):
