@@ -13,3 +13,5 @@
 - [Day 9: Sensor Boost](09)
 - [Day 10: Monitoring Station](10)
 - [Day 11: Space Police](11)
+- [Day 12: The N-Body Problem](12)
+- [Day 13: Care Package](13)
