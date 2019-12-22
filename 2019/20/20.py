@@ -2,10 +2,8 @@ import collections
 import os
 
 inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
-lines = inputFile.readlines()
+grid = [line.rstrip('\n') for line in inputFile]
 inputFile.close()
-
-grid = [line.rstrip('\n') for line in lines]
 
 def isOuter(pos):
     y, x = pos

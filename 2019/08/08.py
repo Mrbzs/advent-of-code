@@ -1,7 +1,7 @@
 import os
 
 inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
-image = inputFile.read()
+image = inputFile.read().rstrip()
 inputFile.close()
 
 def partOne():

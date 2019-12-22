@@ -1,7 +1,7 @@
 import os
 
 inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
-line = inputFile.read()
+line = inputFile.read().rstrip()
 inputFile.close()
 
 def partOne():

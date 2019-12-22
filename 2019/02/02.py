@@ -1,7 +1,7 @@
 import os
 
 inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
-program = [int(num) for num in inputFile.read().split(',')]
+program = [int(num) for num in inputFile.read().rstrip().split(',')]
 inputFile.close()
 
 def partOne(a, b):
