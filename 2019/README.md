@@ -26,3 +26,4 @@
 - [Day 22: Slam Shuffle](22)
 - [Day 23: Category Six](23)
 - [Day 24: Planet of Discord](24)
+- [Day 25: Cryostasis](25)
