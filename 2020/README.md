@@ -15,3 +15,4 @@
 - [Day 11: Seating System](11)
 - [Day 12: Rain Risk](12)
 - [Day 13: Shuttle Search](13)
+- [Day 14: Docking Data](14)
