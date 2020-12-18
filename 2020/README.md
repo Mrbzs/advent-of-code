@@ -19,3 +19,4 @@
 - [Day 15: Rambunctious Recitation](15)
 - [Day 16: Ticket Translation](16)
 - [Day 17: Conway Cubes](17)
+- [Day 18: Operation Order](18)
