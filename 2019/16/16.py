@@ -4,32 +4,36 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
-def partOne():
+
+def part_one():
     phases = 100
-    inputSignal = [int(i) for i in line]
+    input_signal = [int(i) for i in line]
+    output_signal = []
     while phases > 0:
-        outputSignal = []
-        for i in range(len(inputSignal)):
+        output_signal = []
+        for i in range(len(input_signal)):
             output = negative = 0
-            for j in range(i, len(inputSignal), 2 * (i + 1)):
-                for k in range(j, min(j + i + 1, len(inputSignal))):
-                    output += -inputSignal[k] if negative else inputSignal[k]
+            for j in range(i, len(input_signal), 2 * (i + 1)):
+                for k in range(j, min(j + i + 1, len(input_signal))):
+                    output += -input_signal[k] if negative else input_signal[k]
                 negative ^= 1
-            outputSignal.append(abs(output) % 10)
-        inputSignal = outputSignal
+            output_signal.append(abs(output) % 10)
+        input_signal = output_signal
         phases -= 1
-    return ''.join(str(i) for i in outputSignal[:8])
+    return ''.join(str(i) for i in output_signal[:8])
+
 
 # After the given offset, all digits of pattern are 1 so each digit is the sum of itself + the elements to its right
 # Digits are looped starting from the right to avoid computing sum for each digit
-def partTwo():
-    inputSignal = ([int(i) for i in line] * 10000)[int(line[:7]):]
+def part_two():
+    input_signal = ([int(i) for i in line] * 10000)[int(line[:7]):]
     for i in range(100):
         total = 0
-        for j in range(len(inputSignal) - 1, -1, -1):
-            total += inputSignal[j]
-            inputSignal[j] = total % 10
-    return ''.join(str(i) for i in inputSignal[:8])
+        for j in range(len(input_signal) - 1, -1, -1):
+            total += input_signal[j]
+            input_signal[j] = total % 10
+    return ''.join(str(i) for i in input_signal[:8])
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

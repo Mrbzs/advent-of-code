@@ -4,9 +4,10 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
+
 def run(inputs):
     program = dict(enumerate(int(i) for i in line.split(',')))
-    output = i = inputIndex = base = 0
+    output = i = input_index = base = 0
     temp = ''
     while 1:
         instruction = str(program[i]).zfill(5)
@@ -36,8 +37,8 @@ def run(inputs):
             program[key3] = program[key1] * program[key2]
             i += 4
         elif instruction[-1] == '3':
-            program[key1] = inputs[inputIndex]
-            inputIndex += 1
+            program[key1] = inputs[input_index]
+            input_index += 1
             i += 2
         elif instruction[-1] == '4':
             if program[key1] == 10:
@@ -62,7 +63,8 @@ def run(inputs):
             base += program[key1]
             i += 2
 
-def getASCII(instructions):
+
+def get_ascii(instructions):
     inputs = []
     for instruction in instructions:
         for char in instruction:
@@ -70,13 +72,16 @@ def getASCII(instructions):
         inputs.append(10)
     return inputs
 
-def partOne():
+
+def part_one():
     instructions = ['NOT A T', 'OR T J', 'NOT B T', 'OR T J', 'NOT C T', 'OR T J', 'AND D J', 'WALK']
-    return run(getASCII(instructions))
+    return run(get_ascii(instructions))
 
-def partTwo():
+
+def part_two():
     instructions = ['NOT A J', 'NOT C T', 'AND H T', 'OR T J', 'NOT B T', 'AND A T', 'AND C T', 'OR T J', 'AND D J', 'RUN']
-    return run(getASCII(instructions))
+    return run(get_ascii(instructions))
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

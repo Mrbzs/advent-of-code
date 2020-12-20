@@ -15,6 +15,7 @@ for line in lines:
         else:
             messages.append(line)
 
+
 def solve():
     expression = ['0']
     i = 0
@@ -26,9 +27,9 @@ def solve():
                 for j in range(len(paths)):
                     criteria.extend(rules[paths[j]].split(' ') + ['|'])
                 criteria[-1] = ')'
-                expression[i:i+1] = criteria
+                expression[i:i + 1] = criteria
             else:
-                expression[i:i+1] = rules[expression[i]].split(' ')
+                expression[i:i + 1] = rules[expression[i]].split(' ')
             i -= 1
 
         i += 1
@@ -36,19 +37,22 @@ def solve():
     regex = '^' + ''.join(expression) + '$'
     return sum([1 if re.match(regex, message) else 0 for message in messages])
 
-def partOne():
+
+def part_one():
     return solve()
 
-def partTwo():
-    ruleEight = ''
-    ruleEleven = ''
+
+def part_two():
+    rule_eight = ''
+    rule_eleven = ''
     for i in range(1, 7):
-        ruleEight += '42 ' * i + '| '
-        ruleEleven += '42 ' * i + '31 ' * i + '| '
+        rule_eight += '42 ' * i + '| '
+        rule_eleven += '42 ' * i + '31 ' * i + '| '
 
-    rules['8'] = ruleEight[:-3]
-    rules['11'] = ruleEleven[:-3]
+    rules['8'] = rule_eight[:-3]
+    rules['11'] = rule_eleven[:-3]
     return solve()
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

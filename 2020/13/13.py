@@ -1,4 +1,3 @@
-from math import gcd
 import os
 import re
 
@@ -6,20 +5,22 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line.rstrip('\n') for line in inputFile]
 inputFile.close()
 
-def partOne():
-    buses = list(map(int, re.findall('\d+', lines[1])))
+
+def part_one():
+    buses = list(map(int, re.findall(r'\d+', lines[1])))
     timestamp = int(lines[0])
     earliest = res = -1
 
     for bus in buses:
-        busEarliest = timestamp + bus - timestamp % bus
-        if earliest == -1 or busEarliest < earliest:
-            earliest = busEarliest
+        bus_earliest = timestamp + bus - timestamp % bus
+        if earliest == -1 or bus_earliest < earliest:
+            earliest = bus_earliest
             res = (earliest - timestamp) * bus
 
     return res
 
-def partTwo():
+
+def part_two():
     buses = lines[1].split(',')
     arr = []
     for i, bus in enumerate(buses):
@@ -37,5 +38,6 @@ def partTwo():
 
     return t
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

@@ -13,9 +13,10 @@ for line in lines:
         if line[0].isnumeric():
             tickets.append(list(map(int, line.split(','))))
         else:
-            fields.append([line[:line.index(':')], *map(int, re.findall('\d+', line))])
+            fields.append([line[:line.index(':')], *map(int, re.findall(r'\d+', line))])
 
-def partOne():
+
+def part_one():
     valid = set()
     for field in fields:
         for j in range(1, len(field), 2):
@@ -24,62 +25,64 @@ def partOne():
 
     res = 0
     for ticket in tickets:
-        validCheck = True
+        valid_check = True
         for value in ticket:
             if value not in valid:
                 res += value
-                validCheck = False
+                valid_check = False
 
-        if validCheck:
+        if valid_check:
             validTickets.append(ticket)
 
     return res
 
-def partTwo():
+
+def part_two():
     # Precompute valid fields for each ticket column
-    validFields = []
+    valid_fields = []
     for i in range(len(validTickets[0])):
-        validFields.append((i, []))
+        valid_fields.append((i, []))
         for j in range(len(fields)):
             ranges = fields[j][1:]
-            inRange = True
+            in_range = True
             for ticket in validTickets:
                 if not (ranges[0] <= ticket[i] <= ranges[1] or ranges[2] <= ticket[i] <= ranges[3]):
-                    inRange = False
+                    in_range = False
                     break
-            
-            if inRange:
-                validFields[i][1].append(j)
+
+            if in_range:
+                valid_fields[i][1].append(j)
 
     # Sort ticket columns in order of number of least possibilities of fields that fit its ranges 
-    validFields.sort(key=lambda x: len(x[1]))
+    valid_fields.sort(key=lambda x: len(x[1]))
 
     # Use backtracking to bruteforce the fields to each column. Maybe backtracking isn't needed 
     # if the puzzle is designed to have only 1 possible field for each column if done in this way
-    fieldIndex = columnIndex = 0
-    chosenFields = [None] * len(validTickets[0])
-    while columnIndex < len(fields):
-        column, possibleFields = validFields[columnIndex]
-        if possibleFields[fieldIndex] in chosenFields:
-            fieldIndex += 1
+    field_index = column_index = 0
+    chosen_fields = [None] * len(validTickets[0])
+    while column_index < len(fields):
+        column, possible_fields = valid_fields[column_index]
+        if possible_fields[field_index] in chosen_fields:
+            field_index += 1
 
             # Backtrack if we reached the end and no valid field to use
-            while fieldIndex == len(possibleFields):
-                columnIndex -= 1
-                column, possibleFields = validFields[columnIndex]
-                fieldIndex = possibleFields.index(chosenFields[column]) + 1
-                chosenFields[column] = None
+            while field_index == len(possible_fields):
+                column_index -= 1
+                column, possible_fields = valid_fields[column_index]
+                field_index = possible_fields.index(chosen_fields[column]) + 1
+                chosen_fields[column] = None
         else:
-            chosenFields[column] = possibleFields[fieldIndex]
-            fieldIndex = 0
-            columnIndex += 1
+            chosen_fields[column] = possible_fields[field_index]
+            field_index = 0
+            column_index += 1
 
     res = 1
-    for column in range(len(chosenFields)):
-        if 'departure' in fields[chosenFields[column]][0]:
+    for column in range(len(chosen_fields)):
+        if 'departure' in fields[chosen_fields[column]][0]:
             res *= validTickets[0][column]
 
     return res
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

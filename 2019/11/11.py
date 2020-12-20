@@ -4,13 +4,14 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
-def partOne(startColor):
+
+def part_one(start_color):
     program = dict(enumerate(int(i) for i in line.split(',')))
     directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
     direction = 0
     robot = (0, 0)
-    ship = {robot: startColor}
-    res = i = base = outputType = 0
+    ship = {robot: start_color}
+    i = base = output_type = 0
     while 1:
         instruction = str(program[i]).zfill(5)
         if instruction[-2:] == '99':
@@ -42,7 +43,7 @@ def partOne(startColor):
             program[key1] = 0 if robot not in ship else ship[robot]
             i += 2
         elif instruction[-1] == '4':
-            if outputType == 0:
+            if output_type == 0:
                 ship[robot] = program[key1]
             else:
                 if program[key1] == 0:
@@ -51,7 +52,7 @@ def partOne(startColor):
                     direction = (direction + 1) % 4
                 robot = (robot[0] + directions[direction][0], robot[1] + directions[direction][1])
             i += 2
-            outputType ^= 1
+            output_type ^= 1
         elif instruction[-1] == '5':
             i = program[key2] if program[key1] else i + 3
         elif instruction[-1] == '6':
@@ -66,10 +67,11 @@ def partOne(startColor):
             base += program[key1]
             i += 2
 
-def partTwo():
-    ship = partOne(1)
+
+def part_two():
+    ship = part_one(1)
     height = width = 0
-    
+
     # I checked that all values are positive before doing this
     for i, j in ship:
         height = max(height, i + 1)
@@ -82,5 +84,6 @@ def partTwo():
             res += '.' if (i, j) not in ship or ship[(i, j)] == 0 else '#'
     return res
 
-print(f'Part one: {len(partOne(0))}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {len(part_one(0))}')
+print(f'Part two: {part_two()}')

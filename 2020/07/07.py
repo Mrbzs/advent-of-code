@@ -4,7 +4,8 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line.rstrip('\n') for line in inputFile]
 inputFile.close()
 
-def partOne():
+
+def part_one():
     graph = {}
     for line in lines:
         outside, inside = line.split(' contain ')
@@ -29,7 +30,7 @@ def partOne():
     return len(res) - 1
 
 
-def partTwo():
+def part_two():
     graph = {}
     for line in lines:
         outside, inside = line.split(' contain ')
@@ -52,5 +53,6 @@ def partTwo():
 
     return res
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

@@ -4,22 +4,24 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 nums = [int(line.rstrip('\n')) for line in inputFile]
 inputFile.close()
 
-def partOne():
+
+def part_one():
     nums.sort()
     nums.insert(0, 0)
     nums.append(nums[-1] + 3)
-    oneJolt = threeJolt = 0
+    one_jolt = three_jolt = 0
     for i in range(1, len(nums)):
-        oneJolt += nums[i] - nums[i - 1] == 1
-        threeJolt += nums[i] - nums[i - 1] == 3
+        one_jolt += nums[i] - nums[i - 1] == 1
+        three_jolt += nums[i] - nums[i - 1] == 3
 
-    return oneJolt * threeJolt
+    return one_jolt * three_jolt
 
-def partTwo():
+
+def part_two():
     nums.sort()
     nums.insert(0, 0)
     nums.append(nums[-1] + 3)
-    
+
     res = 1
     added = {-1: 0, 0: 0}
 
@@ -34,6 +36,7 @@ def partTwo():
             added[i] = 0
 
     return res
-        
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

@@ -5,8 +5,9 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line.rstrip('\n') for line in inputFile]
 inputFile.close()
 
+
 def solve():
-    def getScore(row, col):
+    def get_score(row, col):
         gradients = {}
         for i in range(len(lines)):
             for j in range(len(lines[0])):
@@ -30,44 +31,44 @@ def solve():
                         gradients[(quadrant, gradient)] = [(i, j)]
         return gradients
 
-    partOne = bestRow = bestCol = 0
-    bestGradients = {}
+    part_one = best_row = best_col = 0
+    best_gradients = {}
     for row in range(len(lines)):
         for col in range(len(lines[0])):
             if lines[row][col] == '#':
-                gradients = getScore(row, col)
-                if len(gradients) > partOne:
-                    partOne = len(gradients) # Number of unique gradients
-                    bestRow = row
-                    bestCol = col
-                    bestGradients = gradients
-    
+                gradients = get_score(row, col)
+                if len(gradients) > part_one:
+                    part_one = len(gradients)  # Number of unique gradients
+                    best_row = row
+                    best_col = col
+                    best_gradients = gradients
+
     # Sort values for each gradient by manhattan distance
-    for key in bestGradients:
-        bestGradients[key].sort(key=lambda x: abs(bestRow - x[0]) + abs(bestCol - x[1]))
+    for key in best_gradients:
+        best_gradients[key].sort(key=lambda x: abs(best_row - x[0]) + abs(best_col - x[1]))
 
     # Separate gradients into 4 quadrants going clockwise starting from top right
     quadrants = [[], [], [], []]
-    for quadrant, gradient in bestGradients:
+    for quadrant, gradient in best_gradients:
         quadrants[quadrant].append(gradient)
 
     # Sort gradients in each quadrant
     for quadrant in range(4):
         quadrants[quadrant].sort(reverse=True)
 
-    partTwo = count = 0
+    count = 0
     while 1:
         for quadrant in range(4):
             for gradient in quadrants[quadrant]:
-                points = bestGradients[(quadrant, gradient)]
+                points = best_gradients[(quadrant, gradient)]
                 if len(points):
-                    partTwo = points[0]
-                    points = points[1:]
+                    part_two = points[0]
                     count += 1
 
                     if count == 200:
-                        print(f'Part one: {partOne}')
-                        print(f'Part two: {partTwo[1] * 100 + partTwo[0]}')
-                        return 
+                        print(f'Part one: {part_one}')
+                        print(f'Part two: {part_two[1] * 100 + part_two[0]}')
+                        return
+
 
 solve()

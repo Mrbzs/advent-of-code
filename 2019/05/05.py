@@ -4,7 +4,8 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
-def partOne():
+
+def part_one():
     program = [int(i) for i in line.split(',')]
     output = i = 0
     while i < len(program):
@@ -23,7 +24,8 @@ def partOne():
             program[program[i + 3]] = p1 + p2 if instruction[-1] == '1' else p1 * p2
             i += 4
 
-def partTwo():
+
+def part_two():
     program = [int(i) for i in line.split(',')]
     output = i = 0
     while i < len(program):
@@ -56,5 +58,6 @@ def partTwo():
                 program[program[i + 3]] = 1 if p1 == p2 else 0
                 i += 4
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

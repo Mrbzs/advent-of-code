@@ -4,7 +4,8 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line.rstrip('\n') for line in inputFile]
 inputFile.close()
 
-def partOne():
+
+def part_one():
     seen = set()
     i = accumulator = 0
     while i not in seen:
@@ -19,7 +20,8 @@ def partOne():
 
     return accumulator
 
-def partTwo():
+
+def part_two():
     for changed in range(len(lines)):
         if lines[changed] == 'acc':
             continue
@@ -37,10 +39,10 @@ def partTwo():
                 i += 1
                 if instruction == 'acc':
                     accumulator += int(operand)
-            
+
             if i >= len(lines):
                 return accumulator
-        
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

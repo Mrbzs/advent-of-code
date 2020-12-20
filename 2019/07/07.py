@@ -5,17 +5,18 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
-def partOne():
-    def getOutput(input1, input2):
+
+def part_one():
+    def get_output(input1, input2):
         program = [int(i) for i in line.split(',')]
-        output = i = inputNum = 0
+        output = i = input_num = 0
         while i < len(program):
             instruction = str(program[i]).zfill(5)
             if instruction[-1] == '9':
                 return output
             elif instruction[-1] == '3':
-                program[program[i + 1]] = input1 if inputNum == 0 else input2
-                inputNum += 1
+                program[program[i + 1]] = input1 if input_num == 0 else input2
+                input_num += 1
                 i += 2
             elif instruction[-1] == '4':
                 output = program[program[i + 1]]
@@ -44,11 +45,12 @@ def partOne():
     for sequence in list(itertools.permutations([0, 1, 2, 3, 4])):
         output = 0
         for phase in sequence:
-            output = getOutput(phase, output)
+            output = get_output(phase, output)
         res = max(res, output)
     return res
 
-def partTwo():
+
+def part_two():
     res = 0
     for feedbackSequence in list(itertools.permutations([5, 6, 7, 8, 9])):
         inputs = [[phase] for phase in feedbackSequence]
@@ -92,5 +94,6 @@ def partTwo():
         res = max(res, inputs[0][-1])
     return res
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

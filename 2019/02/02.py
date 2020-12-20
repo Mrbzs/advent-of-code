@@ -4,7 +4,8 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 program = [int(num) for num in inputFile.read().rstrip().split(',')]
 inputFile.close()
 
-def partOne(a, b):
+
+def part_one(a, b):
     arr = program[:]
     arr[1:3] = [a, b]
 
@@ -16,11 +17,13 @@ def partOne(a, b):
         else:
             return arr[0]
 
-def partTwo():
+
+def part_two():
     for noun in range(100):
         for verb in range(100):
-            if partOne(noun, verb) == 19690720:
+            if part_one(noun, verb) == 19690720:
                 return 100 * noun + verb
 
-print(f'Part one: {partOne(12, 2)}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one(12, 2)}')
+print(f'Part two: {part_two()}')

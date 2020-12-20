@@ -4,10 +4,12 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line.rstrip('\n') for line in inputFile]
 inputFile.close()
 
-def partOne():
+
+def part_one():
     return sum([int(mass) // 3 - 2 for mass in lines])
 
-def partTwo():
+
+def part_two():
     total = 0
     for line in lines:
         mass = int(line)
@@ -16,5 +18,6 @@ def partTwo():
             total += mass
     return total
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

@@ -5,15 +5,16 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = inputFile.readlines()
 inputFile.close()
 
-def partOne():
+
+def part_one():
     # Performs recursive DFS
-    def getOrbits(orbited, orbits):
+    def get_orbits(orbited, orbits):
         if orbited not in graph:
             return 0
         total = 0
         orbits += 1
         for orbiter in graph[orbited]:
-            total += orbits + getOrbits(orbiter, orbits)
+            total += orbits + get_orbits(orbiter, orbits)
         return total
 
     # Construct directed graph
@@ -25,9 +26,10 @@ def partOne():
         else:
             graph[orbited] = [orbiter[:-1]]
 
-    return getOrbits('COM', 0)
+    return get_orbits('COM', 0)
 
-def partTwo():
+
+def part_two():
     # Construct undirected graph
     graph = {}
     start = destination = ''
@@ -51,20 +53,21 @@ def partTwo():
     distances = {start: 0}
     visited = {}
     while len(visited) < len(graph):
-        minDistance = -1
-        minKey = ''
+        min_distance = -1
+        min_key = ''
         for key in graph:
             distance = math.inf if key not in distances else distances[key]
-            if key not in visited and (minDistance == -1 or distance < minDistance):
-                minDistance = distance
-                minKey = key
-        visited[minKey] = 1
+            if key not in visited and (min_distance == -1 or distance < min_distance):
+                min_distance = distance
+                min_key = key
+        visited[min_key] = 1
 
-        for vertex in graph[minKey]:
-            if vertex not in distances or minDistance + 1 < distances[vertex]:
-                distances[vertex] = minDistance + 1
+        for vertex in graph[min_key]:
+            if vertex not in distances or min_distance + 1 < distances[vertex]:
+                distances[vertex] = min_distance + 1
 
     return distances[destination]
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

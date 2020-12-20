@@ -5,14 +5,15 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line.rstrip('\n') for line in inputFile]
 inputFile.close()
 
-def partOne():
+
+def part_one():
     memory = {}
     mask = None
     for line in lines:
         if line[:4] == 'mask':
             mask = line[7:]
         else:
-            address, value = map(int, re.findall('\d+', line))
+            address, value = map(int, re.findall(r'\d+', line))
             for i in range(len(mask)):
                 bit = len(mask) - i - 1
                 if mask[i] == '0':
@@ -24,35 +25,37 @@ def partOne():
 
     return sum(memory.values())
 
-def partTwo():
+
+def part_two():
     memory = {}
     mask = None
     for line in lines:
         if line[:4] == 'mask':
             mask = line[7:]
         else:
-            startAddress, value = map(int, re.findall('\d+', line))
+            start_address, value = map(int, re.findall(r'\d+', line))
 
-            # Bruteforcing since highest number of X in a mask is 9
-            worklist = [(startAddress, 0)]
-            while len(worklist):
-                address, i = worklist.pop()
-                setMemory = True
+            # Bruteforce since highest number of X in a mask is 9
+            work_list = [(start_address, 0)]
+            while len(work_list):
+                address, i = work_list.pop()
+                set_memory = True
                 while i < len(mask):
                     bit = len(mask) - i - 1
                     if mask[i] == '1':
                         address |= 1 << bit
                     elif mask[i] == 'X':
-                        worklist.append((address | 1 << bit, i + 1))
-                        worklist.append((address & ~(1 << bit), i + 1))
-                        setMemory = False
+                        work_list.append((address | 1 << bit, i + 1))
+                        work_list.append((address & ~(1 << bit), i + 1))
+                        set_memory = False
                         break
                     i += 1
-                
-                if setMemory:
+
+                if set_memory:
                     memory[address] = value
-    
+
     return sum(memory.values())
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

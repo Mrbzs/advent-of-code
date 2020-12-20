@@ -4,9 +4,10 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
+
 def run(input1, input2):
     program = dict(enumerate(int(i) for i in line.split(',')))
-    output = i = base = inputNum = 0
+    output = i = base = input_num = 0
     while 1:
         instruction = str(program[i]).zfill(5)
         if instruction[-2:] == '99':
@@ -35,9 +36,9 @@ def run(input1, input2):
             program[key3] = program[key1] * program[key2]
             i += 4
         elif instruction[-1] == '3':
-            if inputNum == 0:
+            if input_num == 0:
                 program[key1] = input1
-                inputNum = 1
+                input_num = 1
             else:
                 program[key1] = input2
             i += 2
@@ -58,31 +59,34 @@ def run(input1, input2):
             base += program[key1]
             i += 2
 
-def partOne():
-    res = prevStart = 0
+
+def part_one():
+    res = prev_start = 0
     for i in range(50):
         first = True
-        for j in range(prevStart, 50):
+        for j in range(prev_start, 50):
             if run(j, i) == 1:
                 if first:
-                    prevStart = j
+                    prev_start = j
                 first = False
                 res += 1
-    
+
     return res
 
-def partTwo():
+
+def part_two():
     i = 10
-    prevStart = 0
+    prev_start = 0
     while 1:
-        j = prevStart
+        j = prev_start
         while run(j, i) == 0:
             j += 1
-        prevStart = j
-        
+        prev_start = j
+
         if run(j + 99, i - 99) == 1:
             return j * 10000 + i - 99
         i += 1
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

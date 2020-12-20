@@ -4,6 +4,7 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
+
 def run(input1, program, i, base):
     while 1:
         instruction = str(program[i]).zfill(5)
@@ -34,7 +35,7 @@ def run(input1, program, i, base):
             program[key1] = input1
             i += 2
         elif instruction[-1] == '4':
-            return (program[key1], program, i + 2, base)
+            return program[key1], program, i + 2, base
         elif instruction[-1] == '5':
             i = program[key2] if program[key1] else i + 3
         elif instruction[-1] == '6':
@@ -49,16 +50,18 @@ def run(input1, program, i, base):
             base += program[key1]
             i += 2
 
+
 def solve():
     program = dict(enumerate(int(i) for i in line.split(',')))
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     paths = [((0, 0), program, 0, 0)]
     visited = {(0, 0): 1}
-    newPaths = []
+    new_paths = []
     grid = {(0, 0): '.'}
 
     steps = empty = 1
     found = 0
+
     # BFS
     while len(paths):
         for path in paths:
@@ -67,35 +70,35 @@ def solve():
                 pos = (path[0][0] + direction[0], path[0][1] + direction[1])
                 if pos not in visited:
                     visited[pos] = 1
-                    output, newProgram, newI, newBase = run(move, dict(path[1]), path[2], path[3])
+                    output, new_program, new_i, new_base = run(move, dict(path[1]), path[2], path[3])
                     if output == 2:
                         if not found:
                             print(f'Part one: {steps}')
                             grid[pos] = 'O'
-                            oxygen = pos
                             found = 1
                     elif output == 1:
                         grid[pos] = '.'
                         empty += 1
-                        newPaths.append((pos, newProgram, newI, newBase))
+                        new_paths.append((pos, new_program, new_i, new_base))
                     else:
                         grid[pos] = '#'
 
-        paths = newPaths[:]
-        newPaths = []
+        paths = new_paths[:]
+        new_paths = []
         steps += 1
 
     minutes = 0
     while empty > 0:
-        newGrid = dict(grid)
+        new_grid = dict(grid)
         for i, j in grid:
             if grid[(i, j)] == '.':
                 if grid[(i + 1, j)] == 'O' or grid[(i - 1, j)] == 'O' or grid[(i, j + 1)] == 'O' or grid[(i, j - 1)] == 'O':
-                    newGrid[(i, j)] = 'O'
+                    new_grid[(i, j)] = 'O'
                     empty -= 1
-        grid = newGrid
+        grid = new_grid
         minutes += 1
-    
+
     print(f'Part two: {minutes}')
+
 
 solve()

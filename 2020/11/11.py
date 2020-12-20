@@ -1,12 +1,14 @@
 import os
 
-def getInputGrid():
-    inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
-    grid = [[cell for cell in line.rstrip('\n')] for line in inputFile]
-    inputFile.close()
+
+def get_input_grid():
+    input_file = open(os.path.dirname(__file__) + '/input.txt', 'r')
+    grid = [[cell for cell in line.rstrip('\n')] for line in input_file]
+    input_file.close()
     return grid
 
-def getOccupiedNeighbors(grid, row, col):
+
+def get_occupied_neighbors(grid, row, col):
     neighbors = 0
     for i in range(max(row - 1, 0), min(len(grid), row + 2)):
         for j in range(max(col - 1, 0), min(len(grid[row]), col + 2)):
@@ -14,7 +16,8 @@ def getOccupiedNeighbors(grid, row, col):
 
     return neighbors
 
-def getOccupiedDirectionalNeighbors(grid, row, col):
+
+def get_occupied_directional_neighbors(grid, row, col):
     directions = [(-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)]
     neighbors = 0
     for direction in directions:
@@ -25,55 +28,57 @@ def getOccupiedDirectionalNeighbors(grid, row, col):
                 break
             y += direction[0]
             x += direction[1]
-    
+
     return neighbors
 
-def partOne():
-    grid = getInputGrid()
+
+def part_one():
+    grid = get_input_grid()
     changed = True
     while changed:
         changed = False
         occupied = 0
 
-        newGrid = []
+        new_grid = []
         for row in range(len(grid)):
-            newGrid.append([])
+            new_grid.append([])
             for col in range(len(grid[row])):
-                neighbors = getOccupiedNeighbors(grid, row, col)
+                neighbors = get_occupied_neighbors(grid, row, col)
                 cell = grid[row][col]
-                newCell = '#' if cell == 'L' and neighbors == 0 else 'L' if cell == '#' and neighbors >= 4 else cell
-                newGrid[-1].append(newCell)
-                changed |= newCell != cell
-                occupied += newCell == '#'
+                new_cell = '#' if cell == 'L' and neighbors == 0 else 'L' if cell == '#' and neighbors >= 4 else cell
+                new_grid[-1].append(new_cell)
+                changed |= new_cell != cell
+                occupied += new_cell == '#'
 
         if not changed:
             return occupied
-        
-        grid = newGrid
+
+        grid = new_grid
 
 
-def partTwo():
-    grid = getInputGrid()
+def part_two():
+    grid = get_input_grid()
     changed = True
     while changed:
         changed = False
         occupied = 0
 
-        newGrid = []
+        new_grid = []
         for row in range(len(grid)):
-            newGrid.append([])
+            new_grid.append([])
             for col in range(len(grid[row])):
-                neighbors = getOccupiedDirectionalNeighbors(grid, row, col)
+                neighbors = get_occupied_directional_neighbors(grid, row, col)
                 cell = grid[row][col]
-                newCell = '#' if cell == 'L' and neighbors == 0 else 'L' if cell == '#' and neighbors >= 5 else cell
-                newGrid[-1].append(newCell)
-                changed |= newCell != cell
-                occupied += newCell == '#'
+                new_cell = '#' if cell == 'L' and neighbors == 0 else 'L' if cell == '#' and neighbors >= 5 else cell
+                new_grid[-1].append(new_cell)
+                changed |= new_cell != cell
+                occupied += new_cell == '#'
 
         if not changed:
             return occupied
-        
-        grid = newGrid
-        
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+        grid = new_grid
+
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

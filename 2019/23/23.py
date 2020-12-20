@@ -4,13 +4,14 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
+
 def solve():
     inputs = [[i] for i in range(50)]
     programs = [dict(enumerate(int(i) for i in line.split(','))) for j in range(50)]
     bases = [0] * 50
     progresses = [0] * 50
     outputs = [[] for i in range(50)]
-    nat = prev = partOne = None
+    nat = prev = part_one = None
     idle = [False] * 50
     while 1:
         for computer in range(50):
@@ -54,9 +55,9 @@ def solve():
                 outputs[computer].append(program[key1])
                 if len(outputs[computer]) == 3:
                     if outputs[computer][0] == 255:
-                        if not partOne:
+                        if not part_one:
                             print(f'Part one: {outputs[computer][2]}')
-                            partOne = 1
+                            part_one = 1
                         nat = (outputs[computer][1], outputs[computer][2])
                     else:
                         inputs[outputs[computer][0]].extend(outputs[computer][1:])
@@ -76,13 +77,14 @@ def solve():
                 bases[computer] += program[key1]
                 i += 2
             progresses[computer] = i
-        
-        if nat and not False in idle:
+
+        if nat and False not in idle:
             if nat == prev:
                 print(f'Part two: {nat[1]}')
                 return
             inputs[0].extend([nat[0], nat[1]])
             prev = nat
             nat = None
+
 
 solve()

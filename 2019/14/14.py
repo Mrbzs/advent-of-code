@@ -5,6 +5,7 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = inputFile.readlines()
 inputFile.close()
 
+
 def solve():
     reactions = {}
     amounts = {}
@@ -18,7 +19,7 @@ def solve():
             amount, reactant = ingredient.split(' ')
             reactions[product].append((int(amount), reactant))
 
-    fuel = 1
+    fuel = ores = 1
     change = 1000000
     # Using binary search for part2 to find most fuel produced under 1 trillion ores
     while change > 1 or ores > 1000000000000:
@@ -41,10 +42,10 @@ def solve():
 
             # Find number of times to make reaction
             times = math.ceil(needed[product] / amounts[product])
-            
+
             # Store extra product from the reaction
-            extraProduct = times * amounts[product] - needed[product]
-            if extraProduct > 0:
+            extra_product = times * amounts[product] - needed[product]
+            if extra_product > 0:
                 if product in extra:
                     extra[product] += times * amounts[product] - needed[product]
                 else:
@@ -62,7 +63,7 @@ def solve():
 
         if fuel == 1:
             print(f'Part one: {ores}')
-        
+
         if ores > 1000000000000:
             change = 1 if change < 4 else change // 2
             fuel -= change
@@ -70,5 +71,6 @@ def solve():
             fuel += change
 
     print(f'Part two: {fuel - 1}')
+
 
 solve()

@@ -3,9 +3,10 @@ import re
 
 inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line for line in inputFile]
-inputFile.close()    
+inputFile.close()
 
-def partOne():
+
+def part_one():
     valid = 0
     fields = set()
     for line in lines + ['\n']:
@@ -18,22 +19,24 @@ def partOne():
 
     return valid
 
-def partTwo():
+
+def part_two():
     valid = 0
     fields = {}
     for line in lines + ['\n']:
         if line == '\n':
-            valid += isValid(fields)
+            valid += is_valid(fields)
             fields = {}
         else:
             for field in line.split(' '):
                 fields[field[:3]] = field[4:].rstrip('\n')
     return valid
 
-def isValid(fields):
+
+def is_valid(fields):
     if any(field not in fields for field in ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']):
         return False
-    match = re.match('^(\d+)(in|cm)$', fields['hgt'])
+    match = re.match(r'^(\d+)(in|cm)$', fields['hgt'])
     if not match:
         return False
     height, unit = match.groups()
@@ -53,5 +56,6 @@ def isValid(fields):
         re.match('^[0-9]{9}$', fields['pid'])
     ])
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

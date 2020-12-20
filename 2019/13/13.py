@@ -4,9 +4,10 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
+
 def run(quarters=None):
     program = dict(enumerate(int(i) for i in line.split(',')))
-    if quarters != None:
+    if quarters is not None:
         program[0] = quarters
 
     i = base = joystick = score = ball = paddle = blocks = 0
@@ -14,7 +15,7 @@ def run(quarters=None):
     while 1:
         instruction = str(program[i]).zfill(5)
         if instruction[-2:] == '99':
-            return score if quarters != None else blocks
+            return score if quarters is not None else blocks
 
         if i + 1 not in program:
             program[i + 1] = 0
@@ -45,7 +46,7 @@ def run(quarters=None):
             output.append(program[key1])
             if len(output) == 3:
                 blocks += output[2] == 2
-                if quarters != None:
+                if quarters is not None:
                     if output[0] == -1 and output[1] == 0:
                         score = output[2]
                     elif output[2] == 3:
@@ -69,6 +70,7 @@ def run(quarters=None):
         elif instruction[-1] == '9':
             base += program[key1]
             i += 2
+
 
 print(f'Part one: {run()}')
 print(f'Part two: {run(2)}')

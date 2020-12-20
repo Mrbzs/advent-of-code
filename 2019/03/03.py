@@ -4,9 +4,10 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line.rstrip('\n') for line in inputFile]
 inputFile.close()
 
+
 def solve():
     points = {}
-    partOne = partTwo = 0
+    part_one = part_two = 0
     for wire in range(2):
         steps = 0
         pos = [0, 0]
@@ -20,15 +21,16 @@ def solve():
                 if wire == 1:
                     if (pos[0], pos[1]) in points:
                         distance = abs(pos[0]) + abs(pos[1])
-                        totalSteps = points[(pos[0], pos[1])] + steps
-                        if partOne == 0 or distance < partOne:
-                            partOne = distance
-                        if partTwo == 0 or totalSteps < partTwo:
-                            partTwo = totalSteps
+                        total_steps = points[(pos[0], pos[1])] + steps
+                        if part_one == 0 or distance < part_one:
+                            part_one = distance
+                        if part_two == 0 or total_steps < part_two:
+                            part_two = total_steps
                 else:
                     points[(pos[0], pos[1])] = steps
 
-    print(f'Part one: {partOne}')
-    print(f'Part two: {partTwo}')
+    print(f'Part one: {part_one}')
+    print(f'Part two: {part_two}')
+
 
 solve()

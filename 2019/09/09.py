@@ -4,6 +4,7 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
+
 def run(input1):
     program = dict(enumerate(int(i) for i in line.split(',')))
     output = i = base = 0
@@ -53,6 +54,7 @@ def run(input1):
         elif instruction[-1] == '9':
             base += program[key1]
             i += 2
+
 
 print(f'Part one: {run(1)}')
 print(f'Part two: {run(2)}')

@@ -6,15 +6,16 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line.rstrip('\n') for line in inputFile]
 inputFile.close()
 
+
 def solve():
     positions = []
     velocities = []
     periods = [0, 0, 0]
     for line in lines:
-        x, y, z = [int(num) for num in re.findall('[\d-]+', line)]
+        x, y, z = [int(num) for num in re.findall(r'[\d-]+', line)]
         positions.append([x, y, z])
         velocities.append([0, 0, 0])
-    
+
     states = [{}, {}, {}]
     step = lcm = 0
     while not lcm or step < 1000:
@@ -25,7 +26,7 @@ def solve():
                     state = ''
                     for i in range(4):
                         state += str(positions[i][p]) + ',' + str(velocities[i][p]) + ' '
-                    
+
                     if state in states[p]:
                         periods[p] = step
                     else:
@@ -45,22 +46,23 @@ def solve():
                     elif positions[i][p] > positions[j][p]:
                         velocities[j][p] += 1
                         velocities[i][p] -= 1
-        
+
         for i in range(4):
             for p in range(3):
                 positions[i][p] += velocities[i][p]
         step += 1
 
         if step == 1000:
-            partOne = 0
+            part_one = 0
             for i in range(4):
                 potential = kinetic = 0
                 for p in range(3):
                     potential += abs(positions[i][p])
                     kinetic += abs(velocities[i][p])
-                partOne += potential * kinetic
-            print(f'Part one: {partOne}')
+                part_one += potential * kinetic
+            print(f'Part one: {part_one}')
 
     print(f'Part two: {lcm}')
+
 
 solve()

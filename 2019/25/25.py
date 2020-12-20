@@ -5,17 +5,21 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 line = inputFile.read().rstrip()
 inputFile.close()
 
-def commandToASCII(command):
+
+def command_to_ascii(command):
     res = []
     for char in command:
         res.append(ord(char))
     return res
 
+
 forbidden = ['escape pod', 'infinite loop', 'molten lava', 'photons', 'giant electromagnet']
+
+
 def run(program, i, base, command):
     output = ''
     room = ''
-    commandIndex = done = 0
+    command_index = done = 0
     directions = []
     items = []
     while 1:
@@ -46,8 +50,8 @@ def run(program, i, base, command):
             program[key3] = program[key1] * program[key2]
             i += 4
         elif instruction[-1] == '3':
-            program[key1] = command[commandIndex]
-            commandIndex += 1
+            program[key1] = command[command_index]
+            command_index += 1
             i += 2
         elif instruction[-1] == '4':
             if program[key1] == 10:
@@ -60,9 +64,9 @@ def run(program, i, base, command):
                             items.append(text)
                     elif output[0] == '=':
                         room = output[3:-3]
-                if output == 'Command?' and commandIndex == len(command):
-                    return (program, i + 2, base, directions, items, room)
-                
+                if output == 'Command?' and command_index == len(command):
+                    return program, i + 2, base, directions, items, room
+
                 if room == 'Pressure-Sensitive Floor':
                     if output[28:45] == 'Analysis complete':
                         done = 1
@@ -86,32 +90,35 @@ def run(program, i, base, command):
             base += program[key1]
             i += 2
 
-def getPosition(y, x, direction):
+
+def get_position(y, x, direction):
     y += (direction == 'south') - (direction == 'north')
     x += (direction == 'east') - (direction == 'west')
-    return (y, x)
+    return y, x
+
 
 def solve():
     visited = {}
     paths = [(dict(enumerate(int(i) for i in line.split(','))), 0, 0, 0, 0, '', '', '')]
     count = 0
     while count < len(paths):
-        program, i, base, y, x, command1, command2, currentItems = paths[count]
-        newProgram, newI, newBase, directions, items, room = run(program, i, base, commandToASCII(f'{command1}{command2}'))
-        
+        program, i, base, y, x, command1, command2, current_items = paths[count]
+        new_program, new_i, new_base, directions, items, room = run(program, i, base, command_to_ascii(f'{command1}{command2}'))
+
         # State for not taking any items
-        newStates = [(currentItems, '')]
+        new_states = [(current_items, '')]
 
         # States for taking items
         for item in items:
-            newStates.append((''.join(sorted(currentItems + item)), f'take {item}\n'))
+            new_states.append((''.join(sorted(current_items + item)), f'take {item}\n'))
 
-        for items, takeCommand in newStates:
+        for items, takeCommand in new_states:
             if room + items not in visited:
                 visited[room + items] = 1
                 for direction in directions:
-                    newY, newX = getPosition(y, x, direction)
-                    paths.append((dict(newProgram), newI, newBase, newY, newX, takeCommand, f'{direction}\n', items))
+                    new_y, new_x = get_position(y, x, direction)
+                    paths.append((dict(new_program), new_i, new_base, new_y, new_x, takeCommand, f'{direction}\n', items))
         count += 1
+
 
 solve()

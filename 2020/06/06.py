@@ -2,9 +2,10 @@ import os
 
 inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line for line in inputFile]
-inputFile.close()    
+inputFile.close()
 
-def partOne():
+
+def part_one():
     res = 0
     questions = set()
     for line in lines + ['\n']:
@@ -14,10 +15,11 @@ def partOne():
         else:
             for question in line.rstrip('\n'):
                 questions.add(question)
-    
+
     return res
 
-def partTwo():
+
+def part_two():
     res = people = 0
     count = {}
     for line in lines + ['\n']:
@@ -33,8 +35,9 @@ def partTwo():
                 if question not in count:
                     count[question] = 0
                 count[question] += 1
-    
+
     return res
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')

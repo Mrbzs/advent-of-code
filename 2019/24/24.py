@@ -4,10 +4,13 @@ inputFile = open(os.path.dirname(__file__) + '/input.txt', 'r')
 lines = [line.rstrip('\n') for line in inputFile]
 inputFile.close()
 
-def countNeighbors(grid, i):
-    return (i // 5 > 0 and grid[i - 5] == '#') + (i // 5 < 4 and grid[i + 5] == '#') + (i % 5 > 0 and grid[i - 1] == '#') + (i % 5 < 4 and grid[i + 1] == '#')
 
-def countNeighbors2(levels, level, i, j):
+def count_neighbors(grid, i):
+    return (i // 5 > 0 and grid[i - 5] == '#') + (i // 5 < 4 and grid[i + 5] == '#') + (i % 5 > 0 and grid[i - 1] == '#') + (
+                i % 5 < 4 and grid[i + 1] == '#')
+
+
+def count_neighbors_2(levels, level, i, j):
     neighbors = 0
     if level - 1 in levels:
         neighbors += i == 0 and levels[level - 1][1][2] == '#'
@@ -15,7 +18,7 @@ def countNeighbors2(levels, level, i, j):
         neighbors += i == 4 and levels[level - 1][3][2] == '#'
         neighbors += j == 4 and levels[level - 1][2][3] == '#'
     if level + 1 in levels:
-        dy, dx = 0, 0
+        y, x, dy, dx = 0, 0, 0, 0
         if i == 1 and j == 2:
             y, x, dy, dx = 0, 0, 0, 1
         elif i == 2 and j == 1:
@@ -24,7 +27,7 @@ def countNeighbors2(levels, level, i, j):
             y, x, dy, dx = 4, 0, 0, 1
         elif i == 2 and j == 3:
             y, x, dy, dx = 0, 4, 1, 0
-        
+
         if dy or dx:
             while y < 5 and x < 5:
                 neighbors += levels[level + 1][y][x] == '#'
@@ -37,22 +40,23 @@ def countNeighbors2(levels, level, i, j):
     neighbors += j < 4 and levels[level][i][j + 1] == '#'
     return neighbors
 
-def partOne():
+
+def part_one():
     seen = {}
     state = ''.join(lines)
     while state not in seen:
         seen[state] = 1
-        nextState = ''
+        next_state = ''
         for i in range(len(state)):
-            neighbors = countNeighbors(state, i)
+            neighbors = count_neighbors(state, i)
             if state[i] == '#' and neighbors != 1:
-                nextState += '.'
+                next_state += '.'
             elif state[i] == '.' and (neighbors == 1 or neighbors == 2):
-                nextState += '#'
+                next_state += '#'
             else:
-                nextState += state[i]
-        state = nextState
-    
+                next_state += state[i]
+        state = next_state
+
     biodiversity = 1
     res = 0
     for cell in state:
@@ -61,36 +65,38 @@ def partOne():
         biodiversity *= 2
     return res
 
-def partTwo():
+
+def part_two():
     levels = {0: [list(line) for line in lines]}
     levels[0][2][2] = '?'
-    minLevel = maxLevel = count = 0
+    min_level = max_level = count = 0
     minutes = 200
     while minutes > 0:
-        newLevels = {}
+        new_levels = {}
         for level in levels:
-            newLevels[level] = [cell[:] for cell in levels[level]]
-        for level in range(minLevel - 1, maxLevel + 2):
+            new_levels[level] = [cell[:] for cell in levels[level]]
+        for level in range(min_level - 1, max_level + 2):
             if level not in levels:
                 levels[level] = [list('..?..') if i == 2 else list('.....') for i in range(5)]
-                newLevels[level] = [list('..?..') if i == 2 else list('.....') for i in range(5)]
+                new_levels[level] = [list('..?..') if i == 2 else list('.....') for i in range(5)]
             for i in range(5):
                 for j in range(5):
-                    neighbors = countNeighbors2(levels, level, i, j)
+                    neighbors = count_neighbors_2(levels, level, i, j)
                     if levels[level][i][j] == '#' and neighbors != 1:
-                        newLevels[level][i][j] = '.'
+                        new_levels[level][i][j] = '.'
                     elif levels[level][i][j] == '.' and (neighbors == 1 or neighbors == 2):
-                        newLevels[level][i][j] = '#'
-                        minLevel = min(minLevel, level)
-                        maxLevel = max(maxLevel, level)
+                        new_levels[level][i][j] = '#'
+                        min_level = min(min_level, level)
+                        max_level = max(max_level, level)
                     else:
-                        newLevels[level][i][j] = levels[level][i][j]
+                        new_levels[level][i][j] = levels[level][i][j]
 
                     if minutes == 1:
-                        count += newLevels[level][i][j] == '#'
-        levels = newLevels
+                        count += new_levels[level][i][j] == '#'
+        levels = new_levels
         minutes -= 1
     return count
 
-print(f'Part one: {partOne()}')
-print(f'Part two: {partTwo()}')
+
+print(f'Part one: {part_one()}')
+print(f'Part two: {part_two()}')
