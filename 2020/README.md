@@ -20,3 +20,4 @@
 - [Day 16: Ticket Translation](16)
 - [Day 17: Conway Cubes](17)
 - [Day 18: Operation Order](18)
+- [Day 19: Monster Messages](19)
